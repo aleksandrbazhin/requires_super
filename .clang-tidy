@@ -1,0 +1,12 @@
+---
+Checks: >-
+  -*,
+  clang-analyzer-*,
+  bugprone-*,
+  performance-*,
+  portability-*,
+  mv-requires-super
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*/(clang-tidy|tests)/.*'
+FormatStyle: file
+...
