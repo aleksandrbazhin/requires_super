@@ -8,6 +8,10 @@ if(NOT LLVM_VERSION_MAJOR EQUAL 14)
   )
 endif()
 
+add_library(MvLlvmSupport INTERFACE)
+target_include_directories(MvLlvmSupport SYSTEM INTERFACE "${LLVM_INCLUDE_DIRS}")
+target_link_libraries(MvLlvmSupport INTERFACE LLVM)
+
 add_library(
   MvRequiresSuperTidyModule
   MODULE

@@ -1,0 +1,13 @@
+#ifndef MV_REQUIRES_SUPER_TEST_CONFIG_HPP
+#define MV_REQUIRES_SUPER_TEST_CONFIG_HPP
+
+namespace mv::test_config
+{
+
+inline constexpr char ClangTidyExecutable[] = R"(@CLANG_TIDY_EXECUTABLE@)";
+inline constexpr char PluginPath[] = R"(@MV_REQUIRES_SUPER_PLUGIN_PATH@)";
+inline constexpr char FixtureDirectory[] = R"(@MV_TEST_SOURCE_DIRECTORY@)";
+
+}  // namespace mv::test_config
+
+#endif  // MV_REQUIRES_SUPER_TEST_CONFIG_HPP

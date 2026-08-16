@@ -43,6 +43,7 @@ the call.
 - Clang-Tidy 14
 - LLVM 14 development files (`llvm-14-dev` on Ubuntu 22.04)
 - Clang 14 development files (`libclang-14-dev` on Ubuntu 22.04)
+- Catch2 2.x (`catch2` on Ubuntu 22.04)
 
 The Clang-Tidy executable and development libraries must use the same major
 LLVM version. A plugin built for one major version is not ABI-compatible with
@@ -57,10 +58,11 @@ ctest --test-dir build --output-on-failure
 cmake --build build --target tidy
 ```
 
-Passing fixtures are under `tests/pass`. Intentionally failing fixtures are
-under `tests/fail`, with a comment beside every expected diagnostic explaining
-the exact violated requirement. The failing CTest succeeds only when all
-expected diagnostics are produced.
+Catch2 discovers ten independent test cases. Passing fixtures are under
+`tests/pass`. Intentionally failing fixtures are under `tests/fail`, with a
+comment beside every expected diagnostic explaining the exact violated
+requirement. The Catch2 process harness runs Clang-Tidy without a shell and
+checks its exit status, check name, overriding method, and required base method.
 
 Use `-DENABLE_CLANG_TIDY=OFF` to build the plugin without creating the explicit
 `tidy` target. Use `-DBUILD_MV_REQUIRES_SUPER_MODULE=OFF` to omit the plugin.
