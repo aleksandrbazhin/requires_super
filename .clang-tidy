@@ -8,5 +8,4 @@ Checks: >-
   mv-requires-super
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*/(clang-tidy|tests)/.*'
-FormatStyle: file
 ...
