@@ -21,8 +21,17 @@ public:
 ```
 
 The nearest explicitly annotated method is required. Unannotated intermediate
-overrides may be called or skipped. The check only verifies that a matching
-call exists; it does not analyze every control-flow path.
+overrides may be called or skipped.
+
+Like Clang's Objective-C `objc_requires_super` behavior:
+
+- the check requires only the existence of a call, not a call on every path;
+- repeated base calls are accepted;
+- calls inside lambdas do not count, even if the lambda is immediately invoked;
+- the base implementation must be called on the current object.
+
+C++ multiple inheritance is also supported: every required override branch
+must receive a call.
 
 ## Requirements
 

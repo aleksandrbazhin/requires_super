@@ -100,6 +100,21 @@ TEST_CASE("a direct override calls its annotated base", "[pass]")
     requirePass("pass/direct_call.cpp");
 }
 
+TEST_CASE("an explicit this base call satisfies the requirement", "[pass]")
+{
+    requirePass("pass/explicit_this_call.cpp");
+}
+
+TEST_CASE("a conditional base call satisfies the existence check", "[pass][control-flow]")
+{
+    requirePass("pass/conditional_call.cpp");
+}
+
+TEST_CASE("multiple base calls satisfy the requirement", "[pass]")
+{
+    requirePass("pass/multiple_calls.cpp");
+}
+
 TEST_CASE("an override without an annotation requirement needs no base call", "[pass]")
 {
     requirePass("pass/unannotated_override.cpp");
@@ -143,4 +158,19 @@ TEST_CASE("calling only one annotated base is diagnosed", "[fail][multiple-inher
 TEST_CASE("a recursive self-call is not a base call", "[fail]")
 {
     requireFailure({"fail/recursive_self_call.cpp", "RecursiveFailure::refresh", "RefreshBase::refresh"});
+}
+
+TEST_CASE("a base call inside a stored lambda does not count", "[fail][lambda]")
+{
+    requireFailure({"fail/lambda_call.cpp", "LambdaFailure::run", "LambdaBase::run"});
+}
+
+TEST_CASE("a base call inside an immediately invoked lambda does not count", "[fail][lambda]")
+{
+    requireFailure({"fail/invoked_lambda_call.cpp", "InvokedLambdaFailure::run", "LambdaBase::run"});
+}
+
+TEST_CASE("a base call on another object does not count", "[fail]")
+{
+    requireFailure({"fail/other_object_call.cpp", "OtherObjectFailure::run", "ObjectBase::run"});
 }

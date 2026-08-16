@@ -96,11 +96,21 @@ public:
     bool VisitCXXMemberCallExpr(const CXXMemberCallExpr *call)
     {
         const CXXMethodDecl *called_method = call->getMethodDecl();
-        if (called_method != nullptr && called_method->getCanonicalDecl() == required_base_)
+        const Expr *object = call->getImplicitObjectArgument();
+        const bool calls_on_current_object =
+            object != nullptr && isa<CXXThisExpr>(object->IgnoreParenImpCasts());
+        if (called_method != nullptr && called_method->getCanonicalDecl() == required_base_ && calls_on_current_object)
         {
             found_ = true;
         }
         return !found_;
+    }
+
+    // Match Clang's Objective-C requires-super behavior: a super call in a
+    // nested block or lambda belongs to that nested callable, not this method.
+    bool TraverseLambdaExpr(LambdaExpr *)
+    {
+        return true;
     }
 
     [[nodiscard]] bool found() const
